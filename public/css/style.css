@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Tilt+Neon&display=swap');
+
+body {
+    font-family : "Noto Sans", sans-serif;
+   background:url("./bg5.jpg");
+   background-size: cover;
+   
+ }
+.comment__box {
+    list-style-type: none;
+    padding-left: 0;
+}
+.comment__box .comment h6 {
+    font-weight: 800;
+}
+p {
+    font-size: 16px;
+}
+.comment {
+    animation: something .6s ease forwards;
+}
+.col-md-12 button {
+    border-radius: 15px;
+    color:white;
+    outline: none;
+    cursor: pointer;
+    transition: .3s linear;
+}
+.col-md-12 button:hover{
+    background: #1F6357;
+}
+@keyframes something {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+

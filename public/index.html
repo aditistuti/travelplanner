@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review Page</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="./css/style.css" /> -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Tilt+Neon&display=swap");
+
+      body {
+        font-family: "Noto Sans", sans-serif;
+        background: url("bg5.jpg");
+        background-size: cover;
+      }
+      .comment__box {
+        list-style-type: none;
+        padding-left: 0;
+      }
+      .comment__box .comment h6 {
+        font-weight: 800;
+      }
+      p {
+        font-size: 16px;
+      }
+      .comment {
+        animation: something 0.6s ease forwards;
+      }
+      .col-md-12 button {
+        border-radius: 15px;
+        color: white;
+        outline: none;
+        cursor: pointer;
+        transition: 0.3s linear;
+      }
+      .col-md-12 button:hover {
+        background: #1f6357;
+      }
+      @keyframes something {
+        0% {
+          transform: translateY(-30px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row mt-4"></div>
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <h1 class="border-bottom pb-2">Reviews</h1>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="">Write your experience about your trip.</label>
+            <textarea id="textarea" rows="3" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <button id="submitBtn" type="button" class="btn btn-info float-right">
+            Post comment
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="typing text-success"></div>
+          <ul class="comment__box"></ul>
+          
+        </div>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
