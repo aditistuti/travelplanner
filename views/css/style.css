@@ -1,0 +1,266 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Tilt+Neon&display=swap');
+
+/* *{
+    padding:0;
+    margin: 0;
+    box-sitting: border-box;
+
+} */
+
+
+
+body {
+    font-family : "Noto Sans", sans-serif;
+   background:url("../img/bg5.jpg");
+   background-size: cover;
+   
+ }
+header{
+    width: 80%;
+    height: 95vh;
+  
+    margin: auto;
+}
+header nav{
+    width: 95%;
+    height: 7%;
+   
+    margin:auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header nav ul{
+    list-style: none;
+    display: flex;
+    
+}
+header nav ul li{
+   padding: 5px 15px;
+   background: #1F6357;
+   border-radius: 15px;
+   margin-right: 10px;
+   margin-top: 15px;
+}
+
+/* header nav ul li:nth-last-child(1) {
+    
+    margin-right: 0;
+} */
+header nav ul li a{
+    text-decoration:none;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    transition: .3s linear;
+}
+
+header nav ul li a:hover{
+    color: black;
+}
+header nav .bi-three-dots{
+    display: none;
+}
+header .content{
+   
+ position: relative;
+    width: 100%;
+    height: 93%;
+   
+}
+header .content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%; /* Adjust height to cover the entire area */
+    background: url("../img/bg1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position:center; /* Position the background image at the top center */
+    background-position-y: 55%;
+    border-radius: 10px;
+    z-index: -1;
+}
+header .content .con{
+    width: 500px;
+    height: auto;
+    padding: 30px;
+   
+}
+header .content .con h1{
+   line-height: 40px;
+   font-weight: 800;
+}
+header .content .con p{
+   font-size: 14px;
+   font-weight: 400; 
+   
+}
+header .content .con button{
+    margin-top: 20px;
+   border: 2px dashed #1F6357;
+   color:white;
+   outline: none;
+   cursor: pointer;
+   transition: .3s linear;
+   
+}
+
+header .content .con button:hover{
+    background: #1F6357;
+    border: 2px solid #1F6357;
+}
+header .trip{
+    position: relative;
+    width:95%;
+    height: auto;
+    margin:auto;
+    
+}
+header .trip .search{
+   position: absolute;
+   top:0;
+   left:0;
+   width: 60%;
+   height: 62px;
+   display: flex;
+   align-items: center;
+    justify-content: center;
+    background: white; 
+    border-radius: 5px;
+    box-shadow: 0px 10px 25px #17a2b8;
+    z-index: 1;
+    padding:10px 20px ;
+}
+header .trip .search .card{
+   width: 200px;
+   height: 100%;
+  
+
+}
+header .trip .search .card h4{
+    font-size: 15px;
+    margin: 0;
+    font-weight: 700;
+   
+}
+header .trip .search .card h4 .bi{
+    position: absolute;
+    font-size: 13px;
+    margin: 2px 0px 0px 5px ;
+    transition: .3s linear;
+  
+}
+header .trip .search .card input{
+    margin-top: 3px;
+    padding: 5px 0px;
+    border:none;
+    outline: none;
+    font-size: 13px;
+   
+    
+}
+header .trip .search input[type="button"]{
+    background: #1F6357;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: .3s linear;
+    cursor: pointer;
+}
+header .trip .search input[type="button"]:hover{
+    background: #17a2b8;
+}
+header .trip .travel{
+    position: relative;
+    width:100%;
+    height: auto;
+    margin: auto;
+    top: 30px;
+  
+    border-radius: 10px;
+    padding-bottom: 20px ;
+    
+    box-shadow:0px 20px 25px -10px #17a2b8;
+}
+header .trip .travel::before{
+    content: "";
+    position: absolute;
+    width:100%;
+    height: 100%;
+    border-radius: 10px;
+    background: rgb(241,241,241,.7);
+    backdrop-filter: blur(1px);
+    z-index: -1;
+}
+header .trip .travel h4{
+    margin: 0;
+    padding: 60px 0px 15px 1.7%;
+}
+header .trip .travel .cards{
+    width: 96%;
+    height: auto;
+    margin: 0 auto;
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    
+
+}
+header .trip .travel .cards .card{
+    width: 220px;
+    height: 180px;
+    background: rgb(241,241,241,.1);
+    
+  
+}
+header .trip .travel .cards .card h3{
+    margin: 0px 0px 0px 0px;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+
+}
+
+header .trip .travel .cards .card img{
+    width: 100%;
+    height: 63%;
+    
+
+}
+header .trip .travel .cards .card .him{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header .trip .travel .cards .card .him a{
+    text-decoration: none;
+    background: #1F6357;
+    color: white;
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-size: 11px;
+    transition: .3s linear;
+
+}
+header .trip .travel .cards .card .him a:hover{
+    background: #17a2b8;
+}
+header .trip .travel .cards .card .him h5{
+    font-size: 11px;
+    font-weight: 500;
+    margin: 0;
+    margin-top: 5px;
+    line-height:15px ;
+}
+header .trip .travel .cards .card .him h5 span{
+    font-size: 13px;
+    font-weight: 700;
+}

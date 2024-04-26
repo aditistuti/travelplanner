@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="log.css">
+    <title>Tripper</title>
+    <style>
+        /* General styles */
+        @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Tilt+Neon&display=swap');
+
+        body {
+            background: url("./img/bg5.jpg");
+            font-family: "Noto Sans", sans-serif;
+            overflow-y: scroll;
+            background-size: cover;
+        }
+
+        a {
+            text-decoration: none;
+            color: #17a2b8;
+            transition: 0.3s ease;
+        }
+
+        a:hover {
+            color: #1F6357;
+        }
+
+        /* Form styles */
+        .form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px 4px rgba(23, 162, 184, 0.3);
+        }
+
+        .tab-group {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 40px 0;
+
+        }
+
+        .tab-group:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .tab-group li a {
+            display: block;
+            text-decoration: none;
+            padding: 15px;
+            background: rgba(23, 162, 184, 0.60);
+            color: #1F6357;
+            font-size: 20px;
+            float: left;
+            width: 50%;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s ease;
+            border-radius: 15px;
+
+        }
+
+        .tab-group li a:hover {
+            background: #1F6357;
+            color: #ffffff;
+        }
+
+        .tab-group .active a {
+            background: #1F6357;
+            color: #ffffff;
+        }
+
+        .tab-content>div:last-child {
+            display: none;
+        }
+
+        h1 {
+            text-align: center;
+            color: #17a2b8;
+            font-weight: 600;
+            margin: 0 0 40px;
+        }
+
+        label {
+            position: absolute;
+            transform: translateY(6px);
+            left: 13px;
+            color: rgba(31, 99, 87, 0.5);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-size: 22px;
+        }
+
+        label.active {
+            transform: translateY(50px);
+            left: 2px;
+            font-size: 14px;
+        }
+
+        label.highlight {
+            color: ff
+        }
+
+        input,
+        textarea {
+            font-size: 22px;
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 5px 10px;
+            background: none;
+            background-image: none;
+            border: 1px solid #1F6357;
+            color: #17a2b8;
+            border-radius: 15px;
+            transition: border-color 0.3s ease, box-shadow 0.25s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #1F6357;
+            outline: none;
+            border-radius: 15px;
+        }
+
+        textarea {
+            border: 2px solid #1F6357;
+            resize: vertical;
+            border-radius: 15px;
+        }
+
+        .field-wrap {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .top-row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .top-row>div {
+            float: left;
+            width: 48%;
+            margin-right: 4%;
+        }
+
+        .button {
+            border: 0;
+            outline: none;
+            border-radius: 0;
+            padding: 15px 0;
+            font-size: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: #1F6357;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            -webkit-appearance: none;
+            border-radius: 15px;
+        }
+
+        .button:hover,
+        .button:focus {
+            background: #17a2b8;
+        }
+
+        .button-block {
+            display: block;
+            width: 100%;
+        }
+
+        .forgot {
+            margin-top: -20px;
+            text-align: right;
+            color: #17a2b8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form">
+        <ul class="tab-group">
+            <li class="tab active"><a href="#signup">Sign Up</a></li>
+            <li class="tab"><a href="#login">Log In</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="signup">
+                <h1>Sign Up</h1>
+                <form action="/signup" method="post">
+                    <div class="top-row">
+                        <div class="field-wrap">
+                            <label>
+                                First Name<span class="req"></span>
+                            </label>
+                            <input type="text" name="firstName" required autocomplete="off" />
+                        </div>
+                        <div class="field-wrap">
+                            <label>
+                                Last Name<span class="req"></span>
+                            </label>
+                            <input type="text" name="lastName" required autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="field-wrap">
+                        <label>
+                            Email Address<span class="req"></span>
+                        </label>
+                        <input type="email" name="email" required autocomplete="off" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>
+                            Set A Password<span class="req"></span>
+                        </label>
+                        <input type="password" name="password" required autocomplete="off" />
+                    </div>
+                    <button type="submit" class="button button-block">Get Started</button>
+                </form>
+            </div>
+            <div id="login">
+                <h1>Welcome Back!</h1>
+                <form>
+                    <div class="field-wrap">
+                        <label>
+                            Email Address<span class="req"></span>
+                        </label>
+                        <input id="email" type="email" name="email" autocomplete="off" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>
+                            Password<span class="req"></span>
+                        </label>
+                        <input id="password" type="password" name="password" autocomplete="off" />
+                    </div>
+                    <p class="forgot"><a href="#">Forgot Password?</a></p>
+                    <button type="button" onclick="onLoginPressed()" class="button button-block">Log In</button>
+                </form>
+            </div>
+
+        </div><!-- tab-content -->
+    </div> <!-- /form -->
+    <!-- <script src="lo.js" defer></script> -->
+    <script defer>
+        let email, password;
+
+        function onChangeEmail(v) {
+            console.log(v.target.value)
+            email = v.target.value;
+        }
+        function onChangePassword(v) {
+            password = v.target.value;
+        }
+        const emailField = document.getElementById("email")
+        const passwordField = document.getElementById("password")
+
+        console.log(emailField, passwordField)
+        emailField.addEventListener("change", onChangeEmail);
+        passwordField.addEventListener("change", onChangePassword);
+
+
+        async function onLoginPressed() {
+
+            console.log(email, password)
+
+
+            await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email, password
+                })
+            })
+
+            localStorage.setItem("auth", JSON.stringify({
+                isLoggedIn: true,
+                email: email,
+
+            }))
+
+            window.location.href = "/";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var tabs = document.querySelectorAll(".tab");
+            var tabContents = document.querySelectorAll(".tab-content > div");
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener("click", function (event) {
+                    event.preventDefault();
+
+                    tabs.forEach(function (item) {
+                        item.classList.remove("active");
+                    });
+                    tab.classList.add("active");
+
+                    var targetId = tab.firstChild.getAttribute("href").substr(1);
+                    tabContents.forEach(function (content) {
+                        if (content.getAttribute("id") === targetId) {
+                            content.style.display = "block";
+                        } else {
+                            content.style.display = "none";
+                        }
+                    });
+                });
+            });
+
+            var inputs = document.querySelectorAll(".form input, .form textarea");
+            inputs.forEach(function (input) {
+                input.addEventListener("keyup", function () {
+                    var label = input.previousElementSibling;
+                    if (input.value.trim() !== "") {
+                        label.classList.add("active", "highlight");
+                    } else {
+                        label.classList.remove("highlight");
+                    }
+                });
+                input.addEventListener("blur", function () {
+                    var label = input.previousElementSibling;
+                    if (input.value.trim() === "") {
+                        label.classList.remove("active", "highlight");
+                    }
+                });
+                input.addEventListener("focus", function () {
+                    var label = input.previousElementSibling;
+                    if (input.value.trim() !== "") {
+                        label.classList.add("highlight");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

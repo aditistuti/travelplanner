@@ -1,0 +1,120 @@
+@media screen and (max-width:1110px){
+    header{
+        width: 90%;
+    }
+}
+@media screen and (max-width:987px){
+    header{
+        width: 95%;
+    }
+    header .trip .search{
+    
+        width: 70%;
+       
+     }
+     header .trip .travel .cards{
+        overflow: auto;
+        
+        
+    
+    }
+    header .trip .travel .cards .card{
+        min-width: 220px;
+        
+      
+    }
+
+}
+@media screen and (max-width: 908px){
+    header nav ul li {
+        padding: 5px 5px;
+    
+    }
+}
+@media screen and (max-width: 746px){
+    header nav ul li {
+        padding: 5px 1px;
+    
+    }
+}
+@media screen and (max-width: 701px){
+    header .trip .search{
+        width: 85%;
+    }
+    header .trip .search .card{
+        margin-right: 8px;
+    }
+}
+@media screen and (max-width: 681px){
+    header{
+        width: 100%;
+    }
+    header nav ul{
+  
+    position: absolute;
+    width: 100px;
+    height: auto;
+    flex-direction: column;
+    background: #1F6357;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #17a2b8;
+    justify-content: center;
+    top:-100%;
+    right: 30%;
+    z-index: 999999999999999;
+    padding: 10px 20px;
+    transition: .8s linear;
+   }
+
+   header nav .ul_active{
+    top:0;
+   }
+   header nav ul li{
+    padding: 8px 0px;
+    text-align: center;
+   }
+   header nav .bi-three-dots{
+    display: unset;
+    }
+    header .trip .search{
+    
+        width: 93%;
+    }
+}
+@media screen and (max-width: 528px){
+    header .trip .search .card{
+        width: 140px;
+
+     
+     }
+     header .trip .search input[type="button"]{
+        position: absolute;
+        right: 10px;
+        bottom: -43px;
+      font-size: 13px;
+    }
+    }
+    @media screen and (max-width: 376px){
+        header .content .con{
+            width: 85%;
+           
+        }
+        header .content .con h1{
+           width: 300px;
+           font-size: 22px;
+         }
+         header .content .con p{
+          width:300px;
+          font-size: 12px; 
+            
+         }
+         header .trip .search{
+            width: 89%;
+         }
+         header .trip .search .card{
+            width: 110px;
+         }
+         header .trip .search .card input{
+        width:100%;  
+        }
+    }

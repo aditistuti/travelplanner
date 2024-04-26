@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Tilt+Neon&display=swap');
+body {
+    font-family : "Noto Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background:url("../img/bg5.jpg");
+   background-size: cover;
+    color:#17a2b8;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color:#17a2b8;
+}
+
+.about-section {
+    padding: 50px 0;
+    text-align: center;
+    color:#17a2b8;
+}
+.about-section .btn{
+    color: white;
+    border: 2px dashed #1F6357;
+    transition: .3s linear;
+}
+.about-section .btn:hover{
+    background: #1F6357;
+    border: 2px solid #1F6357;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+footer {
+    background:url("../img/bg5.jpg");
+    background-size: cover;
+    color: #17a2b8;
+    text-align: center;
+    padding: 20px 0;
+}

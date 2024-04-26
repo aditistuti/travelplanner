@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Tilt+Neon&display=swap');
+body {
+    
+
+    background:url("../img/bg5.jpg");
+    font-family : "Noto Sans", sans-serif;
+    overflow-y: scroll; 
+    background-size: cover;
+}
+div.gallery {
+    border: 1px solid white;
+    transition: transform 0.3s ease;
+    color: #1F6357;
+  }
+  div.gallery:hover {
+    transform: scale(1.1);
+}
+  div.gallery:hover {
+    border: 1px solid #1F6357;
+    transform: scale(1.1);
+  }
+  
+  div.gallery img {
+    width: 100%;
+    height: 300px;
+ 
+}
+
+  
+  div.desc {
+    padding: 15px;
+    text-align: center;
+    font-weight: 800;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .responsive {
+    padding: 6px 6px;
+    float: left;
+    width: 24.99999%;
+    color: #17a2b8;
+    background:url("../img/bg5.jpg");}
+  
+  @media only screen and (max-width: 700px) {
+    .responsive {
+      width: 49.99999%;
+      margin: 6px 0;
+    }
+  }
+  
+  @media only screen and (max-width: 500px) {
+    .responsive {
+      width: 100%;
+    }
+  }
+  
+  .clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
