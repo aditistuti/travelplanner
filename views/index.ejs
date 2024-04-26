@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script defer src="./js/main.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/media.css">
+    <title>Tripper</title>
+</head>
+<body>
+    <header>
+        <nav>
+           <h2>
+            TRIPPER
+           </h2>
+           <ul id="menu1">
+
+            <li>
+                <a href="/index.html">Reviews</a>
+            </li>
+            <li>
+                <a href="map.html">Map</a>
+            </li>
+
+            <li>
+                <a href="it.html">Itineraries</a>
+            </li>
+            <li>
+                <a href="about.html">About/ Contact</a>
+            </li>
+
+                <li>
+                  <a id="login" href="login.html">Login/ Sign up</a>
+                </li>
+    
+           </ul>
+           <i class="bi bi-three-dots"></i>
+        </nav>
+        <div class="content">
+            <div class="con">
+                <h1>Embark on your next adventure with us!</h1>
+                <p><b>Explore the wonders of India and create unforgettable memories.</b></p>
+                <a href="login.html" style="text-decoration: none;">
+                    <button type="button" class="btn btn-info">Start your journey</button>
+                </a>
+                
+            </div>
+            <div class="trip">
+                <div class="search">
+                    <div class="card">
+                        <h4>Destination<i class="bi bi-caret-down-fill"></i></h4>
+                        <input type="search" id="destinationInput" placeholder="Enter your destination">
+                    </div>
+                    <div class="card">
+                        <h4>Duration<i class="bi bi-caret-down-fill"></i></h4>
+                        <input type="number" placeholder="how many days?">
+
+                    </div>
+                    <div class="card"> 
+                        <h4>People <i class="bi bi-caret-down-fill"></i></h4>
+                        <input type="number" placeholder="how many people?">
+                    </div>
+                    <input  type="button" id="exploreButton" value="Explore Now">
+                </div>
+                
+                <div class="travel">
+                    <h4>States to travel</h4>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>Himachal Pradesh</h3>
+                            <img src="img\bg2.jpg" alt="Himachal Pradesh">
+                            <div class="him">
+                                <a href="https://himachaltourism.gov.in/destination/manali/">Read Now</a>
+                                <h5>Manali<br><span>Rs.3,000-Rs.6,000</span></h5>
+                            </div>
+
+                        </div>
+                        
+                        <div class="card">
+                            <h3>Rajasthan</h3>
+                            <img src="img/bg3.jpg" alt="Rajasthan">
+                            <div class="him">
+                                <a href="https://www.tourism.rajasthan.gov.in/jaipur.html">Read Now</a>
+                                <h5>Jaipur<br><span>Rs.4,500-Rs.8,400</span></h5>
+                            </div>
+
+                        </div>
+                        <div class="card">
+                            <h3>Goa</h3>
+                            <img src="img/bg4.jpg" alt="Goa">
+                            <div class="him">
+                                <a href="https://goa-tourism.com/popular-destination/baga/">Read Now</a>
+                                <h5>Baga<br><span>Rs.5,100-Rs.9,600</span></h5>
+                            </div>
+
+                        </div>
+                        <div class="card">
+                            <h3>Uttar Pradesh</h3>
+                            <img src="img/bg1.jpg" alt="Uttar Pradesh">
+                            <div class="him">
+                                <a href="https://uptourism.gov.in/en/page/agra-fatehpur-sikri">Read Now</a>
+                                <h5>Agra<br><span>Rs.4,450-Rs.9,700</span></h5>
+                            </div>
+
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+
+        
+    </header>
+    <script src="./js/func.js"></script>
+
+    <script>
+        document.getElementById("exploreButton").addEventListener("click", function() {
+            var destination = document.getElementById("destinationInput").value;
+            // Encode the destination to be passed as a query parameter
+            var encodedDestination = encodeURIComponent(destination);
+            // Redirect to the explore page passing the destination as a query parameter
+            window.location.href = "explore.html?destination=" + encodedDestination;
+        });
+    </script>
+    
+    
+</body>
+
+</html>
