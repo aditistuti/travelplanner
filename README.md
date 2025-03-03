@@ -1,19 +1,16 @@
-# Travel Planner
+# Tripper
 
-Welcome to the **Travel Planner** repository! This project is designed to help users plan their trips efficiently by providing a comprehensive set of tools and features to organize travel itineraries, manage budgets, and explore destinations.
+Welcome to the **Tripper** repository! This project is designed to help users plan their trips efficiently by providing a comprehensive set of tools and features to organize travel itineraries, manage budgets, and explore destinations.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
-Travel Planner is a web-based application that allows users to create, manage, and share travel plans. Whether you're planning a weekend getaway or a month-long adventure, this tool helps you keep track of your flights, accommodations, activities, and expenses all in one place.
+Tripper is a web-based application that allows users to create, manage, and share travel plans. Whether you're planning a weekend getaway or a month-long adventure, this tool helps you keep track of your flights, accommodations, activities, and expenses all in one place.
 
 ## Features
 
@@ -25,7 +22,7 @@ Travel Planner is a web-based application that allows users to create, manage, a
 
 ## Installation
 
-To get started with the Travel Planner, follow these steps:
+To get started with the Tripper, follow these steps:
 
 1. **Clone the repository**:
    ```bash
