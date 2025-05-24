@@ -1,3 +1,5 @@
+const dotenv = require('dotenv')
+dotenv.config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -12,7 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
 app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
 
-mongoose.connect('mongodb://localhost:27017/tripperDB');
+console.log(process.env.MONGODB_URL);
+
+mongoose.connect(`${process.env.MONGODB_URL}`);
 
 const userSchema = new mongoose.Schema({
   firstName: String,
