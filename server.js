@@ -14,9 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('views'));
 app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
 
-console.log(process.env.MONGODB_URL);
-
-mongoose.connect(`${process.env.MONGODB_URL}`);
+const mongoUrl = process.env.MONGODB_URL || process.env.DATABASE_URL;
+mongoose.connect(mongoUrl)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err.message));
 
 const userSchema = new mongoose.Schema({
   firstName: String,
