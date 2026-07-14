@@ -1,20 +1,36 @@
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 dotenv.config();
+
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const session = require('express-session');
-const ejs = require('ejs');
+const bcrypt = require('bcrypt');
+
+const Comment = require('./models/comment');
 
 const app = express();
-app.use(express.json());
-app.use(bodyParser.json());
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('views'));
-app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
 
+// --- Middleware ---
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'dev-only-insecure-secret-change-me',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Static assets. `index: false` so directory requests (like "/") fall through
+// to the route below that renders the EJS home page instead of public/index.html.
+app.use(express.static('public', { index: false }));
+app.use(express.static('views', { index: false }));
+
+// --- Database ---
 const mongoUrl = process.env.MONGODB_URL || process.env.DATABASE_URL;
+if (!mongoUrl) {
+  console.error('Missing MONGODB_URL environment variable. Set it in your .env file.');
+  process.exit(1);
+}
 mongoose.connect(mongoUrl)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err.message));
@@ -27,135 +43,120 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-// Middleware to check if the user is logged in
+// --- Auth helpers ---
+// eslint-disable-next-line no-unused-vars
 const requireLogin = (req, res, next) => {
   if (req.session.userId) {
-    next(); // User is logged in, proceed to the next middleware
+    next();
   } else {
-    res.redirect('/login'); // Redirect to login page if user is not logged in
+    res.redirect('/login.html');
   }
 };
 
-// Routes
-app.get('/', (req, res) => {
-  const { user } = req.session;
-  res.render('index', { user });
-});
-// Home page route
-app.get('/', requireLogin, (req, res) => {
-  User.findById(req.session.userId)
-    .then(user => {
-      if (user) {
-        res.render('index', { user }); // Render index.ejs with user data
-      } else {
-        res.redirect('/login'); // Redirect to login if user data is not found
-      }
-    })
-    .catch(err => {
-      console.error('Error finding user:', err);
-      res.redirect('/login'); // Redirect to login in case of an error
-    });
+// --- Routes ---
+
+// Home page (public; shows user info if logged in)
+app.get('/', async (req, res) => {
+  try {
+    let user = null;
+    if (req.session.userId) {
+      user = await User.findById(req.session.userId);
+    }
+    res.render('index', { user });
+  } catch (err) {
+    console.error('Error loading home page:', err.message);
+    res.render('index', { user: null });
+  }
 });
 
-// Signup route
+// Signup
 app.post('/signup', async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
-  const newUser = new User({ firstName, lastName, email, password });
- await newUser.save()
-
- res.redirect("/login.html");
-  
+  if (!email || !password) {
+    return res.status(400).send('Email and password are required');
+  }
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    const newUser = new User({ firstName, lastName, email, password: hash });
+    await newUser.save();
+    res.redirect('/login.html');
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).send('An account with that email already exists');
+    }
+    console.error('Signup error:', err.message);
+    res.status(500).send('Signup failed');
+  }
 });
 
-// Login route
-app.post('/login', (req, res) => {
+// Login (returns JSON so the client can react to success/failure)
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  console.log("Login Route: ", req.body, email, password);
-  User.findOne({ email, password })
-    .then(user => {
-      if (user) {
-        req.session.userId = user._id; // Store user ID in session
-        res.redirect('/'); // Redirect to home page after successful login
-      } else {
-        res.status(401).send('Invalid credentials');
-      }
-    })
-    .catch(err => res.status(500).send('Login failed'));
+  if (!email || !password) {
+    return res.status(400).json({ ok: false, message: 'Email and password are required' });
+  }
+  try {
+    const user = await User.findOne({ email });
+    if (user && await bcrypt.compare(password, user.password)) {
+      req.session.userId = user._id;
+      return res.json({ ok: true });
+    }
+    return res.status(401).json({ ok: false, message: 'Invalid credentials' });
+  } catch (err) {
+    console.error('Login error:', err.message);
+    res.status(500).json({ ok: false, message: 'Login failed' });
+  }
 });
 
+// Logout
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
+});
 
-// const PORT = 4000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
+// --- Comment API ---
+app.post('/api/comments', async (req, res) => {
+  const { username, comment } = req.body;
+  if (!username || !comment) {
+    return res.status(400).json({ error: 'username and comment are required' });
+  }
+  try {
+    const saved = await new Comment({ username, comment }).save();
+    res.status(201).json(saved);
+  } catch (err) {
+    console.error('Error saving comment:', err.message);
+    res.status(500).json({ error: 'Failed to save comment' });
+  }
+});
 
+app.get('/api/comments', async (req, res) => {
+  try {
+    const comments = await Comment.find().sort({ createdAt: 1 });
+    res.json(comments);
+  } catch (err) {
+    console.error('Error fetching comments:', err.message);
+    res.status(500).json({ error: 'Failed to fetch comments' });
+  }
+});
 
-
-
-
-
-app.use(express.static('public'))
-
-// const dbConnect = require('./db')
-function dbConnect() {
-  // Db connection
-  // const mongoose = require('mongoose')
-  // const url = 'mongodb://localhost:27017/comments'
-
-  // mongoose.connect(url, {
-  //     userNewUrlParser: true,
-  //     useUnifiedTopology: true,
-  //     useFindAndModify: true
-  // })
-
-  const connection = mongoose.connection
-  connection.once('open', function () {
-      console.log('Database connected...')
-  })
-}
-
-module.exports = dbConnect
-dbConnect()
-const Comment = require('./models/comment')
-
-app.use(express.json())
-
-// Routes 
-app.post('/api/comments', (req, res) => {
-    const comment = new Comment({
-        username: req.body.username,
-        comment: req.body.comment
-    })
-    comment.save().then(response => {
-        res.send(response)
-    })
-
-})
-
-app.get('/api/comments', (req, res) => {
-    Comment.find().then(function(comments) {
-        res.send(comments)
-    })
-})
-
-const port = process.env.PORT || 8080
-
+// --- Server + Socket.io ---
+const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-})
+  console.log(`Listening on port ${port}`);
+});
 
-let io = require('socket.io')(server)
+const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-    console.log(`New connection: ${socket.id}`)
-    // Recieve event
-    socket.on('comment', (data) => {
-        data.time = Date()
-        socket.broadcast.emit('comment', data)
-    })
+  console.log(`New connection: ${socket.id}`);
 
-    socket.on('typing', (data) => {
-        socket.broadcast.emit('typing', data) 
-    })
-})
+  socket.on('comment', (data) => {
+    data.time = new Date();
+    socket.broadcast.emit('comment', data);
+  });
 
+  socket.on('typing', (data) => {
+    socket.broadcast.emit('typing', data);
+  });
+});
