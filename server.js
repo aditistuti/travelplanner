@@ -22,8 +22,10 @@ app.use(session({
 
 // Static assets. `index: false` so directory requests (like "/") fall through
 // to the route below that renders the EJS home page instead of public/index.html.
-app.use(express.static('public', { index: false }));
+// `views` is served first so the EJS pages' assets (e.g. css/style.css) win over
+// same-named files under `public/` (which only the /index.html "Reviews" page uses).
 app.use(express.static('views', { index: false }));
+app.use(express.static('public', { index: false }));
 
 // --- Database ---
 const mongoUrl = process.env.MONGODB_URL || process.env.DATABASE_URL;
