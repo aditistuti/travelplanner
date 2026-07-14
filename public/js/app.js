@@ -32,6 +32,15 @@ function postComment(comment) {
 
 }
 
+function escapeHtml(value) {
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+}
+
 function appendToDom(data) {
     let lTag = document.createElement('li')
     lTag.classList.add('comment', 'mb-3')
@@ -39,8 +48,8 @@ function appendToDom(data) {
     let markup = `
                         <div class="card border-light mb-3">
                             <div class="card-body">
-                                <h6>${data.username}</h6>
-                                <p>${data.comment}</p>
+                                <h6>${escapeHtml(data.username)}</h6>
+                                <p>${escapeHtml(data.comment)}</p>
                                 <div>
                                     <img src="/img/clock.png" alt="clock">
                                     <small>${moment(data.time).format('LT')}</small>

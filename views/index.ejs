@@ -22,9 +22,6 @@
             <li>
                 <a href="/index.html">Reviews</a>
             </li>
-            <li>
-                <a href="map.html">Map</a>
-            </li>
 
             <li>
                 <a href="it.html">Itineraries</a>
@@ -33,9 +30,15 @@
                 <a href="about.html">About/ Contact</a>
             </li>
 
+                <% if (user) { %>
+                <li>
+                  <a id="login" href="/logout" onclick="localStorage.removeItem('auth')">Logout (<%= user.firstName || user.email %>)</a>
+                </li>
+                <% } else { %>
                 <li>
                   <a id="login" href="login.html">Login/ Sign up</a>
                 </li>
+                <% } %>
     
            </ul>
            <i class="bi bi-three-dots"></i>
@@ -72,7 +75,7 @@
                     <div class="cards">
                         <div class="card">
                             <h3>Himachal Pradesh</h3>
-                            <img src="img\bg2.jpg" alt="Himachal Pradesh">
+                            <img src="img/bg2.jpg" alt="Himachal Pradesh">
                             <div class="him">
                                 <a href="https://himachaltourism.gov.in/destination/manali/">Read Now</a>
                                 <h5>Manali<br><span>Rs.3,000-Rs.6,000</span></h5>
