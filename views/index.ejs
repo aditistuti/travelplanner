@@ -63,12 +63,16 @@
                     </div>
                     <div class="card">
                         <h4>Duration<i class="bi bi-caret-down-fill"></i></h4>
-                        <input type="number" placeholder="how many days?">
+                        <input type="number" id="daysInput" placeholder="how many days?">
 
                     </div>
                     <div class="card"> 
                         <h4>People <i class="bi bi-caret-down-fill"></i></h4>
-                        <input type="number" placeholder="how many people?">
+                        <input type="number" id="peopleInput" placeholder="how many people?">
+                    </div>
+                    <div class="card"> 
+                        <h4>Budget <i class="bi bi-caret-down-fill"></i></h4>
+                        <input type="number" id="budgetInput" placeholder="what is your budget?">
                     </div>
                     <input  type="button" id="exploreButton" value="Explore Now">
                 </div>
@@ -126,13 +130,14 @@
     <script src="./js/func.js"></script>
 
     <script>
-        document.getElementById("exploreButton").addEventListener("click", function() {
-            var destination = document.getElementById("destinationInput").value;
-            // Encode the destination to be passed as a query parameter
-            var encodedDestination = encodeURIComponent(destination);
-            // Redirect to the explore page passing the destination as a query parameter
-            window.location.href = "explore.html?destination=" + encodedDestination;
-        });
+        document.getElementById("exploreButton").addEventListener("click", async() => {
+            const destination = document.getElementById('destinationInput').value;
+            const days = document.getElementById('daysInput').value;
+            const people = document.getElementById('peopleInput').value;
+            const budget = document.getElementById('budgetInput').value;
+            const param = new URLSearchParams({destination, days, people, budget})
+            window.location.href = `/itinerary.html?${param.toString()}`;
+        })
     </script>
     
     
