@@ -7,8 +7,11 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 
 const Comment = require('./models/comment');
-
+const { GoogleGenAI , Type} = require('@google/genai');
+const googleGenAI = new GoogleGenAI ({apiKey: process.env.GEMINI_KEY});
+const GEMINI_MODEL = 'gemini-3.5-flash';
 const app = express();
+
 
 // --- Middleware ---
 app.use(express.json());
@@ -116,6 +119,59 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
+// itneries creation
+app.post('/api/itinerary', async (req, res)=>{
+  const{destination, days, budget, people} =req.body;
+  if(!destination){
+    return res.status(400).json({ok:false, error: "destination is required"});
+  }
+  const daysrange=Number(days);
+  if(daysrange<=0 || daysrange>31 || ! Number.isInteger(daysrange)){
+    return res.status(400).json({ok:false, error:"days are invalid"});
+  }
+  const prompt = `Create a ${days}-day travel itinerary for ${destination} ` +
+    `for ${people || 1} people with a total budget of ${budget || 'flexible'}. ` +
+    `Give a short title and 3-4 activities per day with a rough cost estimate.`;
+  try{
+    const response = await googleGenAI.models.generateContent({
+      model: GEMINI_MODEL,
+      contents : prompt,
+      config: {
+        responseMimeType: 'application/json',
+        responseSchema: {
+          type :Type.OBJECT,
+          properties: {
+            destination: {type: Type.STRING},
+            days:{
+              type : Type.ARRAY,
+              items: {
+                type:Type.OBJECT,
+                properties :{
+                  day:{type: Type.NUMBER},
+                  title : {type: Type.STRING},
+                  activities : {
+                    type: Type.ARRAY,
+                    items: {type :Type.STRING}
+
+                  },
+                  estimatedCost : {type :Type.STRING}
+                },
+                required: ['day', 'title', 'activities', 'estimatedCost'],
+              }
+            }
+          },
+          required: ['destination', 'days'],
+        }
+      }
+    })
+    const itinerary =JSON.parse(response.text);
+    res.json({ok:true, itinerary});
+  }
+  catch(err){
+    console.error('Itinerary generation failed:', err.message);
+    res.status(500).json({ok:false, error: 'Failed to generate itinerary'})
+  }
+})
 
 // --- Comment API ---
 app.post('/api/comments', async (req, res) => {

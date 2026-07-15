@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/iti.css">
+    <style>
+        /* Additional CSS styles */
+    
+        .responsive{
+        
+          justify-content: center;
+          align-items: center;
+        }
+        
+    </style>
+    <title>Tripper</title>
+</head>
+<body>
+    <div class="responsive" >
+        <div id="itineraryResult">
+
+        </div>
+    </div>
+    <script>
+        window.addEventListener("DOMContentLoaded",async()=>{
+        const param = window.location.search;
+        const params = new URLSearchParams(param);
+        const destination =params.get('destination');
+        const days =params.get('days');
+        const people =params.get('people');
+        const budget =params.get('budget');
+        const resultDiv =document.getElementById('itineraryResult');
+            resultDiv.textContent = 'Generating your itinerary…';
+            try{
+                const response= await fetch("/api/itinerary",{
+                    method : 'POST',
+                    headers : {'Content-Type': 'application/json'},
+                    body : JSON.stringify({destination,days,people,budget})
+                    
+                })
+                const data = await response.json();
+                if(!data.ok){
+                    return resultDiv.textContent= data.error || 'Something went wrong';
+                }
+                const itinerary = document.createElement('div');
+                itinerary.className = 'day-card';
+                data.itinerary.days.forEach(day=>{
+                    const h3 = document.createElement('h3');
+                    h3.textContent = `Day ${day.day}: ${day.title}`
+                    itinerary.appendChild(h3);
+                    const ul =document.createElement('ul');
+                    
+                    day.activities.forEach(act=> 
+                    {const li= document.createElement('li');
+                    li.textContent = act;
+                    ul.appendChild(li);
+                    })
+                    itinerary.appendChild(ul);
+                    const p =document.createElement('p');
+                    p.textContent =`Estimated cost: ${day.estimatedCost}`;
+                    itinerary.appendChild(p);
+                })
+                resultDiv.textContent = '';
+                resultDiv.appendChild(itinerary);
+
+            }
+            catch(err){
+                resultDiv.textContent = 'Network error! please try again.'
+            }
+        })
+    </script>
+</body>
+</html>
